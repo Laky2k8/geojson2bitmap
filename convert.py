@@ -5,22 +5,14 @@ from PIL import Image, ImageDraw
 from shapely.geometry import box
 import csv
 
-def int_24bit_to_rgb(num):
-	r = (num >> 16) & 255
-	g = (num >> 8) & 255
-	b = num & 255
-	return (r,g,b)
-
 def int_to_rgb_split(val_16bit):
-    # Ensure it stays within 16-bit boundaries (0 - 65535)
+    # Ensure it stays within 0 - 65535
     val = val_16bit & 0xFFFF
     
-    # Extract raw bit chunks
     r_bits = (val >> 11) & 0x1F  # 5 bits
     g_bits = (val >> 5)  & 0x3F  # 6 bits
     b_bits = val         & 0x1F  # 5 bits
     
-    # Scale exactly to 0-255 range
     r = (r_bits * 255) // 31
     g = (g_bits * 255) // 63
     b = (b_bits * 255) // 31
